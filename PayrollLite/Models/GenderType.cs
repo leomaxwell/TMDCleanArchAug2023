@@ -7,11 +7,11 @@ public class GenderType
     [Key]
     public int Id { get; set; }
 
-    [Required]
-    [MaxLength(50)]
+    [Required(ErrorMessage ="This field is required.")]
+    [MaxLength(50, ErrorMessage ="Name must be less than 50 characters")]
     public string Name { get; set; }
 
-    [MaxLength(150)]
+    [MaxLength(150, ErrorMessage = "Name must be less than 150 characters")]
     public string Description { get; set; }
 
     [Required]

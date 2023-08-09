@@ -1,0 +1,43 @@
+﻿@page
+@model PayrollLite.Pages.MonthsOfYear.DetailModel
+@{
+}
+
+<div class="card">
+    @if (Model.Vm is null)
+    {
+        <div class="alert alert-info">
+            <p>No record with id:@Model.Id exist.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-header">
+            <h2>Month of Year</h2>
+            <small>Detail of selected record.</small>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label asp-for="Vm.Name" class="col-md-4 col-form-label">Name</label>
+                <div class="col-md-8">
+                    <span class="form-control-plaintext">@Model.Vm.Name</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Vm.Abbreviation" class="col-md-4 col-form-label">Abbreviation</label>
+                <div class="col-md-8">
+                    <span class="form-control-plaintext">@Model.Vm.Abbreviation</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Vm.Number" class="col-md-4 col-form-label">Number</label>
+                <div class="col-md-8">
+                    <span class="form-control-plaintext">@Model.Vm.Number</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a asp-page="Index" class="btn btn-lg btn-secondary">Back to List</a>
+        </div>
+    }
+</div>

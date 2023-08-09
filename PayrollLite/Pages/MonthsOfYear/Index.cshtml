@@ -1,0 +1,51 @@
+﻿@page
+@model PayrollLite.Pages.MonthsOfYear.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h2>Months of Year</h2>
+        <small>Listing of available Months of Year.</small>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (Model.Vm is null)
+            {
+                <div class="alert alert-info">
+                    <p>No record available...</p>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Abbreviation</th>
+                            <th>Number</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Vm)
+                        {
+                            <tr>
+                                <td><a asp-page="Detail" asp-route-id="@item.Id">@item.Name</a></td>
+                                <td>@item.Abbreviation</td>
+                                <td>@item.Number</td>
+                                <td>
+                                    <a asp-page="Detail" asp-route-id="@item.Id">View</a>
+                                    <a asp-page="Edit" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-page="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-page="Create" class="btn btn-lg btn-primary">New Record</a>
+    </div>
+</div>

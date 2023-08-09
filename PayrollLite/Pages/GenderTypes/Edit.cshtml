@@ -1,0 +1,46 @@
+﻿@page
+@model PayrollLite.Pages.GenderTypes.EditModel
+@{
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (Model.Vm is null)
+    {
+        <div class="alert alert-info">
+            <p>No record with id:@Model.Id exist.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                <h2>Edit Gender Type</h2>
+                <small>Fields marked with an asterisk(*) are required.</small>
+            </div>
+            <div class="card-body">
+                <input asp-for="Vm.Id" value="@Model.Id" hidden />
+                <input asp-for="Vm.RecordedBy" value="System" hidden />
+
+                <div class="mb-3">
+                    <label asp-for="Vm.Name" class="form-label">Name*</label>
+                    <input asp-for="Vm.Name" type="text" class="form-control">
+                    <span asp-validation-for="Vm.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Vm.Description" class="form-label">Description</label>
+                    <input asp-for="Vm.Description" type="text" class="form-control">
+                    <span asp-validation-for="Vm.Description" class="text-danger" />
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-lg btn-primary"><i class="bi bi-download"></i> Save</button>
+                <a asp-page="Index" class="btn btn-lg btn-secondary">Cancel</a>
+            </div>
+        </div>
+    }
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

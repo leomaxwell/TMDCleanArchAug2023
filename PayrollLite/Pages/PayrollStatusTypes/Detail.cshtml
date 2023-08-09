@@ -1,0 +1,37 @@
+﻿@page
+@model PayrollLite.Pages.PayrollStatusTypes.DetailModel
+@{
+}
+
+<div class="card">
+    @if (Model.Vm is null)
+    {
+        <div class="alert alert-info">
+            <p>No record with id:@Model.Id exist.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-header">
+            <h2>Payroll Status Type</h2>
+            <small>Detail of selected record.</small>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 row">
+                <label asp-for="Vm.Name" class="col-md-4 col-form-label">Name</label>
+                <div class="col-md-8">
+                    <span class="form-control-plaintext">@Model.Vm.Name</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Vm.Description" class="col-md-4 col-form-label">Description</label>
+                <div class="col-md-8">
+                    <span class="form-control-plaintext">@Model.Vm.Description</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a asp-page="Index" class="btn btn-lg btn-secondary">Back to List</a>
+        </div>
+    }
+</div>

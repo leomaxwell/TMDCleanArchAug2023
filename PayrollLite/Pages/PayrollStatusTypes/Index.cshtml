@@ -1,0 +1,49 @@
+﻿@page
+@model PayrollLite.Pages.PayrollStatusTypes.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header">
+        <h2>Payroll Status Types</h2>
+        <small>Listing of available payroll status types.</small>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @if (Model.Vm is null)
+            {
+                <div class="alert alert-info">
+                    <p>No record available...</p>
+                </div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Vm)
+                        {
+                            <tr>
+                                <td><a asp-page="Detail" asp-route-id="@item.Id">@item.Name</a></td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a asp-page="Detail" asp-route-id="@item.Id">View</a>
+                                    <a asp-page="Edit" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-page="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-page="Create" class="btn btn-lg btn-primary">New Record</a>
+    </div>
+</div>
