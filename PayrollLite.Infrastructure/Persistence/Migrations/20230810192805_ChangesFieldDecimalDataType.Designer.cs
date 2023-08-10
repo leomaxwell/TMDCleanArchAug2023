@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PayrollLite.Data;
 
@@ -11,9 +12,11 @@ using PayrollLite.Data;
 namespace PayrollLite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230810192805_ChangesFieldDecimalDataType")]
+    partial class ChangesFieldDecimalDataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace PayrollLite.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PayrollLite.Models.Employee", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,11 +54,8 @@ namespace PayrollLite.Migrations
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GenderTypeId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("GrossSalary")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("DECIMAL(10, 4)");
 
                     b.Property<string>("JobTitle")
                         .IsRequired()
@@ -76,8 +76,8 @@ namespace PayrollLite.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNo")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("RecordedBy")
                         .IsRequired()
@@ -86,12 +86,12 @@ namespace PayrollLite.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderTypeId");
+                    b.HasIndex("GenderId");
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.GenderType", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.GenderType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace PayrollLite.Migrations
                     b.ToTable("GenderTypes");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.MonthOfYear", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.MonthOfYear", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,7 +171,7 @@ namespace PayrollLite.Migrations
                     b.ToTable("MonthsOfYear");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.Payroll", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Payroll", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,20 +190,13 @@ namespace PayrollLite.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<decimal>("ExchangeRate")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Decimal(19,2)");
+                        .HasColumnType("DECIMAL(10, 4)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("MonthId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MonthOfYearId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PayrollStatusTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("RecordedBy")
@@ -219,14 +212,14 @@ namespace PayrollLite.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MonthOfYearId");
+                    b.HasIndex("MonthId");
 
-                    b.HasIndex("PayrollStatusTypeId");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Payrolls");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.PayrollItem", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.PayrollItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,10 +237,10 @@ namespace PayrollLite.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("GrossSalary")
-                        .HasColumnType("Decimal(19,2)");
+                        .HasColumnType("DECIMAL(10, 4)");
 
                     b.Property<decimal>("IncomeTax")
-                        .HasColumnType("Decimal(19,2)");
+                        .HasColumnType("DECIMAL(10, 4)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(150)
@@ -270,7 +263,7 @@ namespace PayrollLite.Migrations
                     b.ToTable("PayrollItems");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.PayrollStatusType", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.PayrollStatusType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -307,42 +300,48 @@ namespace PayrollLite.Migrations
                     b.ToTable("PayrollStatusTypes");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.Employee", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("PayrollLite.Models.GenderType", "GenderType")
+                    b.HasOne("PayrollLite.Domain.Entities.GenderType", "GenderType")
                         .WithMany("Employees")
-                        .HasForeignKey("GenderTypeId");
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("GenderType");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.Payroll", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Payroll", b =>
                 {
-                    b.HasOne("PayrollLite.Models.MonthOfYear", "MonthOfYear")
+                    b.HasOne("PayrollLite.Domain.Entities.MonthOfYear", "MonthOfYear")
                         .WithMany("Payrolls")
-                        .HasForeignKey("MonthOfYearId");
+                        .HasForeignKey("MonthId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("PayrollLite.Models.PayrollStatusType", "PayrollStatusType")
+                    b.HasOne("PayrollLite.Domain.Entities.PayrollStatusType", "PayrollStatusType")
                         .WithMany("Payrolls")
-                        .HasForeignKey("PayrollStatusTypeId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("MonthOfYear");
 
                     b.Navigation("PayrollStatusType");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.PayrollItem", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.PayrollItem", b =>
                 {
-                    b.HasOne("PayrollLite.Models.Employee", "Employee")
-                        .WithMany()
+                    b.HasOne("PayrollLite.Domain.Entities.Employee", "Employee")
+                        .WithMany("PayrollItems")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PayrollLite.Models.Payroll", "Payroll")
+                    b.HasOne("PayrollLite.Domain.Entities.Payroll", "Payroll")
                         .WithMany("PayrollItems")
                         .HasForeignKey("PayrollId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -350,22 +349,27 @@ namespace PayrollLite.Migrations
                     b.Navigation("Payroll");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.GenderType", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("PayrollLite.Models.MonthOfYear", b =>
-                {
-                    b.Navigation("Payrolls");
-                });
-
-            modelBuilder.Entity("PayrollLite.Models.Payroll", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("PayrollItems");
                 });
 
-            modelBuilder.Entity("PayrollLite.Models.PayrollStatusType", b =>
+            modelBuilder.Entity("PayrollLite.Domain.Entities.GenderType", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("PayrollLite.Domain.Entities.MonthOfYear", b =>
+                {
+                    b.Navigation("Payrolls");
+                });
+
+            modelBuilder.Entity("PayrollLite.Domain.Entities.Payroll", b =>
+                {
+                    b.Navigation("PayrollItems");
+                });
+
+            modelBuilder.Entity("PayrollLite.Domain.Entities.PayrollStatusType", b =>
                 {
                     b.Navigation("Payrolls");
                 });

@@ -1,10 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>4bfb5c91-4b48-4ae5-b113-8c6e8e697721</UserSecretsId>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PayrollLite.Application\PayrollLite.Application.csproj" />
-    <ProjectReference Include="..\PayrollLite.Infrastructure\PayrollLite.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
