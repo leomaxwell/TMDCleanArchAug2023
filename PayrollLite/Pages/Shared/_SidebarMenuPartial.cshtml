@@ -1,0 +1,62 @@
+﻿<ul class="menu-inner py-1">
+    <!-- Dashboard -->
+    <li class="menu-item">
+        <a asp-page="/Dashboard/Index" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Dashboard</div>
+        </a>
+    </li>
+
+    <!-- Pay Master -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-briefcase"></i>
+            <div data-i18n="Pay Master">Pay Master</div>
+        </a>
+        <ul class="menu-sub">
+            <!-- Employees -->
+            <li class="menu-item">
+                <a asp-page="/Employees/Index" class="menu-link">
+                    <div data-i18n="Employees">Employees</div>
+                </a>
+            </li>
+            <!-- Payrolls -->
+            <li class="menu-item">
+                <a asp-page="/Payrolls/Index" class="menu-link">
+                    <div data-i18n="Payrolls">Payrolls</div>
+                </a>
+            </li>
+            <!-- Pay Slip -->
+            <li class="menu-item">
+                <a asp-page="/Payrolls/PaySlip" class="menu-link">
+                    <div data-i18n="Pay Slip">Pay Slip</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Settingsr -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-cog"></i>
+            <div data-i18n="Settings">Settings</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a asp-page="/GenderTypes/Index" class="menu-link">
+                    <div data-i18n="Gender Types">Gender Types</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a asp-page="/MonthsOfYear/Index" class="menu-link">
+                    <div data-i18n="Months of Year">Months of Year</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a asp-page="/PayrollStatusTypes/Index" class="menu-link">
+                    <div data-i18n="Payrolls Status Types">Payroll Status Types</div>
+                </a>
+            </li>
+        </ul>
+    </li>  
+</ul>

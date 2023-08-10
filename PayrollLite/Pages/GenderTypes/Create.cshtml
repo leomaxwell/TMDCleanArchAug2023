@@ -1,34 +1,54 @@
 ﻿@page
 @model PayrollLite.Pages.GenderTypes.CreateModel
 @{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Gender Type";
 }
-<form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="card">
-        <div class="card-header">
-            <h2>New Gender Type</h2>
-            <small>Fields marked with an asterisk(*) are required.</small>
-        </div>
-        <div class="card-body">
-            <input asp-for="Vm.RecordedBy" value="System" hidden />
 
-            <div class="mb-3">
-                <label asp-for="Vm.Name" class="form-label">Name*</label>
-                <input asp-for="Vm.Name" type="text" class="form-control">
-                <span asp-validation-for="Vm.Name" class="text-danger" />
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+        <!-- Basic Layout -->
+        <div class="col-xxl">
+            <h4 class="fw-bold py-3 mb-1">Create  @ViewData["Title"]</h4>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <p class="mb-0">
+                        <strong>Details </strong><br />
+                        <small>Fields marked with an asterisk (<span class="text-danger">*</span>) are required.</small>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Vm.RecordedBy" value="System" hidden />
+                        <div class="row mb-3">
+                            <label asp-for="Vm.Name" class="col-sm-2 col-form-label">Name<span class="text-danger">*</span> :</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Vm.Name" type="text" class="form-control" />
+                                <span asp-validation-for="Vm.Name" class="text-danger" />
+                            </div>
+                        </div>                        
+                        <div class="row mb-3">
+                            <label asp-for="Vm.Description" class="col-sm-2 col-form-label">Description :</label>
+                            <div class="col-sm-10">
+                                <textarea asp-for="Vm.Description" class="form-control"></textarea>
+                                <span asp-validation-for="Vm.Description" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10 align-content-end">
+                                <button type="submit" class="btn btn-primary"><span class="tf-icons bx bx-download"></span> Save</button>
+                                <a asp-page="Index" class="btn btn-secondary"><span class="tf-icons bx bx-x"></span> Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label asp-for="Vm.Description" class="form-label">Description</label>
-                <input asp-for="Vm.Description" type="text" class="form-control">
-                <span asp-validation-for="Vm.Description" class="text-danger" />
-            </div>
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-lg btn-primary"><i class="bi bi-download"></i> Save</button>
-            <a asp-page="Index" class="btn btn-lg btn-secondary">Cancel</a>
         </div>
     </div>
-</form>
+</div>
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

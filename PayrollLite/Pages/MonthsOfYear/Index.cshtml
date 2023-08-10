@@ -1,51 +1,62 @@
 ﻿@page
 @model PayrollLite.Pages.MonthsOfYear.IndexModel
 @{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Months of Year";
 }
-<div class="card">
-    <div class="card-header">
-        <h2>Months of Year</h2>
-        <small>Listing of available Months of Year.</small>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            @if (Model.Vm is null)
-            {
-                <div class="alert alert-info">
-                    <p>No record available...</p>
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl">
+            <h4 class="fw-bold py-3 mb-2">@ViewData["Title"]</h4>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <p class="mb-0"><strong>Listing </strong><br /><small>All @ViewData["Title"].ToString().ToLower() available in the system.</small></p>
+                    <span class="text-muted float-end">
+                        <a asp-page="Create" type="button" class="btn btn-sm btn-success">
+                            <span class="tf-icons bx bx-plus"></span>&nbsp; Create New
+                        </a>
+                    </span>
                 </div>
-            }
-            else
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Abbreviation</th>
-                            <th>Number</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Vm)
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        @if (Model.Vm is null)
                         {
-                            <tr>
-                                <td><a asp-page="Detail" asp-route-id="@item.Id">@item.Name</a></td>
-                                <td>@item.Abbreviation</td>
-                                <td>@item.Number</td>
-                                <td>
-                                    <a asp-page="Detail" asp-route-id="@item.Id">View</a>
-                                    <a asp-page="Edit" asp-route-id="@item.Id">Edit</a>
-                                    <a asp-page="Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
-                            </tr>
+                            <div class="alert alert-info" role="alert">
+                                <p>No record available...</p>
+                            </div>
                         }
-                    </tbody>
-                </table>
-            }
+                        else
+                        {
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Abbreviation</th>
+                                        <th>Number</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @foreach (var item in Model.Vm)
+                                    {
+                                        <tr>
+                                            <td><a asp-page="Detail" asp-route-id="@item.Id" class="nav-link">@item.Name</a></td>
+                                            <td>@item.Abbreviation</td>
+                                            <td>@item.Number</td>
+                                            <td>
+                                                <a asp-page="Detail" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-info"><span class="tf-icons bx bx-glasses-alt"></span> View</a>
+                                                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-warning"><span class="tf-icons bx bx-edit-alt"></span> Edit</a>
+                                                <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-danger"><span class="tf-icons bx bx-trash"></span> Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="card-footer">
-        <a asp-page="Create" class="btn btn-lg btn-primary">New Record</a>
     </div>
 </div>
