@@ -12,9 +12,9 @@ namespace PayrollLite.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            return RedirectToPage("Dashboard/Index");
         }
     }
 }
