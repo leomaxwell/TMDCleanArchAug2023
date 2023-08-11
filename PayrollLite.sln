@@ -5,11 +5,19 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollLite", "PayrollLite\PayrollLite.csproj", "{ADF1482C-95EB-4871-8A51-BF3DB79CCF97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollLite.Domain", "PayrollLite.Domain\PayrollLite.Domain.csproj", "{A07844EB-601C-4338-AFEF-6C6A47838023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollLite.Domain", "PayrollLite.Domain\PayrollLite.Domain.csproj", "{A07844EB-601C-4338-AFEF-6C6A47838023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollLite.Application", "PayrollLite.Application\PayrollLite.Application.csproj", "{D129B9AE-E0B3-4992-8D2F-2EDEB14E12DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollLite.Application", "PayrollLite.Application\PayrollLite.Application.csproj", "{D129B9AE-E0B3-4992-8D2F-2EDEB14E12DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollLite.Infrastructure", "PayrollLite.Infrastructure\PayrollLite.Infrastructure.csproj", "{ED2EB582-F10A-4AAE-8799-3F814979470C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollLite.Infrastructure", "PayrollLite.Infrastructure\PayrollLite.Infrastructure.csproj", "{ED2EB582-F10A-4AAE-8799-3F814979470C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{32C52CE8-48F5-428E-B0DC-5C0443C20CDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{8CA4E2A4-B526-49B5-8591-2F926FDB4001}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{9DD8B512-6A66-43D8-8552-BF059A01A513}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F7BE38EE-EF87-4B28-B077-29C02FECF877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +44,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADF1482C-95EB-4871-8A51-BF3DB79CCF97} = {8CA4E2A4-B526-49B5-8591-2F926FDB4001}
+		{A07844EB-601C-4338-AFEF-6C6A47838023} = {32C52CE8-48F5-428E-B0DC-5C0443C20CDA}
+		{D129B9AE-E0B3-4992-8D2F-2EDEB14E12DC} = {32C52CE8-48F5-428E-B0DC-5C0443C20CDA}
+		{ED2EB582-F10A-4AAE-8799-3F814979470C} = {32C52CE8-48F5-428E-B0DC-5C0443C20CDA}
+		{32C52CE8-48F5-428E-B0DC-5C0443C20CDA} = {9DD8B512-6A66-43D8-8552-BF059A01A513}
+		{8CA4E2A4-B526-49B5-8591-2F926FDB4001} = {9DD8B512-6A66-43D8-8552-BF059A01A513}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF8EA8DA-B17A-46A2-AC7E-2BC934566BB8}

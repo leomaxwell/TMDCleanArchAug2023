@@ -1,15 +1,17 @@
+using PayrollLite.Application.GenderTypes.Commands.CreateGenderType;
+
 namespace PayrollLite.Pages.GenderTypes;
 
 public class CreateModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty]
-    public GenderType Vm { get; set; }
+    public CreateGenderTypeCommand Command { get; set; }
 
-    public CreateModel(ApplicationDbContext dbContext)
+    public CreateModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public IActionResult OnGet()
@@ -19,22 +21,13 @@ public class CreateModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid == false)
         {
-            var model = new GenderType()
-            {
-                Name = Vm.Name,
-                Description = Vm.Description,
-                RecordedBy = Vm.RecordedBy,
-                DateRecorded = DateTime.Now
-            };
-
-            _dbContext.GenderTypes.Add(model);
-            await _dbContext.SaveChangesAsync();
-
-            return RedirectToPage("Index");
+            return Page();            
         }
 
-        return Page();
+        await _mediator.Send(Command);
+        return RedirectToPage("Index");
+
     }
 }

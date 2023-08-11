@@ -2,7 +2,7 @@ namespace PayrollLite.Pages.PayrollStatusTypes;
 
 public class DeleteModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
@@ -10,7 +10,7 @@ public class DeleteModel : PageModel
     [BindProperty]
     public PayrollStatusType Vm { get; set; }
 
-    public DeleteModel(ApplicationDbContext dbContext)
+    public DeleteModel(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -31,7 +31,7 @@ public class DeleteModel : PageModel
         }
 
         _dbContext.PayrollStatusTypes.Remove(model);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(new CancellationToken());
 
         return RedirectToPage("Index");
     }

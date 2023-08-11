@@ -2,11 +2,11 @@ namespace PayrollLite.Pages.PayrollStatusTypes;
 
 public class IndexModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
     public IList<PayrollStatusType> Vm { get; set; }
 
-    public IndexModel(ApplicationDbContext dbContext)
+    public IndexModel(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

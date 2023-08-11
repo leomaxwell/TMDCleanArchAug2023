@@ -2,14 +2,14 @@ namespace PayrollLite.Pages.MonthsOfYear;
 
 public class DetailModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
     public MonthOfYear Vm { get; set; }
 
-    public DetailModel(ApplicationDbContext dbContext)
+    public DetailModel(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

@@ -2,11 +2,11 @@ namespace PayrollLite.Pages.MonthsOfYear;
 
 public class IndexModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
     public IList<MonthOfYear> Vm { get; set; }
 
-    public IndexModel(ApplicationDbContext dbContext)
+    public IndexModel(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

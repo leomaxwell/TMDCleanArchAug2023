@@ -20,20 +20,19 @@
                 </div>
                 <div class="card-body">
                     <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="Vm.RecordedBy" value="System" hidden />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>                        
                         <div class="row mb-3">
-                            <label asp-for="Vm.Name" class="col-sm-2 col-form-label">Name<span class="text-danger">*</span> :</label>
+                            <label asp-for="Command.Name" class="col-sm-2 col-form-label">Name<span class="text-danger">*</span> :</label>
                             <div class="col-sm-10">
-                                <input asp-for="Vm.Name" type="text" class="form-control" />
-                                <span asp-validation-for="Vm.Name" class="text-danger" />
+                                <input asp-for="Command.Name" type="text" class="form-control" />
+                                <span asp-validation-for="Command.Name" class="text-danger" />
                             </div>
                         </div>                        
                         <div class="row mb-3">
-                            <label asp-for="Vm.Description" class="col-sm-2 col-form-label">Description :</label>
+                            <label asp-for="Command.Description" class="col-sm-2 col-form-label">Description :</label>
                             <div class="col-sm-10">
-                                <textarea asp-for="Vm.Description" class="form-control"></textarea>
-                                <span asp-validation-for="Vm.Description" class="text-danger" />
+                                <textarea asp-for="Command.Description" class="form-control"></textarea>
+                                <span asp-validation-for="Command.Description" class="text-danger" />
                             </div>
                         </div>
                         <div class="row">

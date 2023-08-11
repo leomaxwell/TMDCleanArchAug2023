@@ -1,12 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
-
-builder.Services.AddRazorPages();
-
+builder.Services.AddRazorPages().AddFluentValidation(fv =>
+{
+    fv.ImplicitlyValidateChildProperties = true;
+});
 
 var app = builder.Build();
 

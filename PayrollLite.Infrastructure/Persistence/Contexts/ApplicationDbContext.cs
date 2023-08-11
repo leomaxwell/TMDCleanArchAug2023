@@ -1,9 +1,6 @@
-﻿using PayrollLite.Infrastructure.Persistence.Configurations;
-using System.Reflection;
+﻿namespace PayrollLite.Infrastructure.Persistence.Contexts;
 
-namespace PayrollLite.Data;
-
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }

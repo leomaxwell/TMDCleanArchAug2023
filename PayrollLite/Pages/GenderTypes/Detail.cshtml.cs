@@ -1,22 +1,25 @@
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypeDetail;
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypes;
+
 namespace PayrollLite.Pages.GenderTypes;
 
 public class DetailModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
-    public GenderType Vm { get; set; }
+    public GenderTypeDto Dto { get; set; }
 
-    public DetailModel(ApplicationDbContext dbContext)
+    public DetailModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.GenderTypes.FindAsync(Id);
+        Dto = await _mediator.Send(new GetGenderTypeDetailQuery() { Id = Id });
         return Page();
     }
 }

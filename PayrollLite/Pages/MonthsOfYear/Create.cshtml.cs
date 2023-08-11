@@ -2,12 +2,12 @@ namespace PayrollLite.Pages.MonthsOfYear;
 
 public class CreateModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IApplicationDbContext _dbContext;
 
     [BindProperty]
     public MonthOfYear Vm { get; set; }
 
-    public CreateModel(ApplicationDbContext dbContext)
+    public CreateModel(IApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -31,7 +31,7 @@ public class CreateModel : PageModel
             };
 
             _dbContext.MonthsOfYear.Add(model);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(new CancellationToken());
 
             return RedirectToPage("Index");
         }

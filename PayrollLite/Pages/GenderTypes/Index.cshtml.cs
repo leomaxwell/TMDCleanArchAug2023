@@ -1,19 +1,21 @@
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypes;
+
 namespace PayrollLite.Pages.GenderTypes;
 
 public class IndexModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
-    public IList<GenderType> Vm { get; set; }
+    public GenderTypesVm Vm { get; set; }
 
-    public IndexModel(ApplicationDbContext dbContext)
+    public IndexModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.GenderTypes.ToListAsync();
+        Vm = await  _mediator.Send(new GetGenderTypesQuery());        
         return Page();
     }
 }

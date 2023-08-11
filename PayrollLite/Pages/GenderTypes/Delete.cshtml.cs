@@ -1,37 +1,33 @@
+using PayrollLite.Application.GenderTypes.Commands.DeleteGenderType;
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypeDetail;
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypes;
+
 namespace PayrollLite.Pages.GenderTypes;
 
 public class DeleteModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
     [BindProperty]
-    public GenderType Vm { get; set; }
+    public GenderTypeDto Dto { get; set; }
 
-    public DeleteModel(ApplicationDbContext dbContext)
+    public DeleteModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.GenderTypes.FindAsync(Id);
+        Dto = await _mediator.Send(new GetGenderTypeDetailQuery() { Id = Id });
         return Page();
     }
 
     public async Task<IActionResult> OnPost()
-    {
-        var model = await _dbContext.GenderTypes.FindAsync(Vm.Id);
-
-        if(model is null)
-        {
-            return Page();
-        }
-
-        _dbContext.GenderTypes.Remove(model);
-        await _dbContext.SaveChangesAsync();
+    {        
+        await _mediator.Send(new DeleteGenderTypeCommand() { Id = Id });
 
         return RedirectToPage("Index");
     }

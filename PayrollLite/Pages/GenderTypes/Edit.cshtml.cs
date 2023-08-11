@@ -1,23 +1,29 @@
+using PayrollLite.Application.GenderTypes.Commands.UpdateGenderType;
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypeDetail;
+using PayrollLite.Application.GenderTypes.Queries.GetGenderTypes;
+
 namespace PayrollLite.Pages.GenderTypes;
 
 public class EditModel : PageModel
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
     [BindProperty]
-    public GenderType Vm { get; set; }
+    public UpdateGenderTypeCommand Command { get; set; }
 
-    public EditModel(ApplicationDbContext dbContext)
+    public GenderTypeDto Dto { get; set; }
+
+    public EditModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.GenderTypes.FindAsync(Id);
+        Dto = await _mediator.Send(new GetGenderTypeDetailQuery() { Id = Id});
         return Page();
     }
 
@@ -25,15 +31,12 @@ public class EditModel : PageModel
     {
         if (ModelState.IsValid)
         {
-            var model = await _dbContext.GenderTypes.FindAsync(Vm.Id);
-            model.Name = Vm.Name;
-            model.Description = Vm.Description;
-            model.LastModifiedBy = "System";
-            model.DateLastModified = DateTime.Now;
-                        
-            await _dbContext.SaveChangesAsync();
-
+            await _mediator.Send(Command);
             return RedirectToPage("Index");
+        }
+        else
+        {
+            Dto = await _mediator.Send(new GetGenderTypeDetailQuery() { Id = Id });
         }
 
         return Page();

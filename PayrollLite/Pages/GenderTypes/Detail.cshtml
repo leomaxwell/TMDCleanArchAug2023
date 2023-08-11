@@ -8,7 +8,7 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
         <div class="col-xxl">
-            @if (Model.Vm is null)
+            @if (Model.Dto is null)
             {
                 <div class="alert alert-danger" role="alert">
                     <p>No record with id:@Model.Id exist.</p>
@@ -26,15 +26,15 @@
                     <div class="card-body">
                         <form method="post">
                             <div class="row mb-3">
-                                <label asp-for="Vm.Name" class="col-sm-2 col-form-label">Name :</label>
+                                <label asp-for="Dto.Name" class="col-sm-2 col-form-label">Name :</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Vm.Name" type="text" readonly class="form-control" />
+                                    <input asp-for="Dto.Name" type="text" readonly class="form-control" />
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label asp-for="Vm.Description"  class="col-sm-2 col-form-label">Description :</label>
+                                <label asp-for="Dto.Description" class="col-sm-2 col-form-label">Description :</label>
                                 <div class="col-sm-10">
-                                    <textarea asp-for="Vm.Description" readonly class="form-control"></textarea>
+                                    <textarea asp-for="Dto.Description" readonly class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="row">
