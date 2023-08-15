@@ -13,9 +13,7 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <p class="mb-0"><strong>Listing </strong><br /><small>All @ViewData["Title"].ToString().ToLower() available in the system.</small></p>
                     <span class="text-muted float-end">
-                        <a asp-page="Create" type="button" class="btn btn-sm btn-success">
-                            <span class="tf-icons bx bx-plus"></span>&nbsp; Create New
-                        </a>
+                       
                     </span>
                 </div>
                 <div class="card-body">
@@ -45,7 +43,6 @@
                                             <td>
                                                 <a asp-page="Detail" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-info"><span class="tf-icons bx bx-glasses-alt"></span> View</a>
                                                 <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-warning"><span class="tf-icons bx bx-edit-alt"></span> Edit</a>
-                                                <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm rounded-pill btn-outline-danger"><span class="tf-icons bx bx-trash"></span> Delete</a>
                                             </td>
                                         </tr>
                                     }

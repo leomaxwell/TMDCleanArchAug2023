@@ -1,23 +1,29 @@
+using PayrollLite.Application.PayrollStatusTypes.Commands.UpdatePayrollStatusType;
+using PayrollLite.Application.PayrollStatusTypes.Queries.GetPayrollStatusTypeDetail;
+using PayrollLite.Application.PayrollStatusTypes.Queries.GetPayrollStatusTypes;
+
 namespace PayrollLite.Pages.PayrollStatusTypes;
 
 public class EditModel : PageModel
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
-    [BindProperty]
-    public PayrollStatusType Vm { get; set; }
+    public PayrollStatusTypeDto Dto { get; set; }
 
-    public EditModel(IApplicationDbContext dbContext)
+    [BindProperty]
+    public UpdatePayrollStatusTypeCommand Command { get; set; }
+
+    public EditModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.PayrollStatusTypes.FindAsync(Id);
+        Dto = await _mediator.Send(new GetPayrollStatusTypeDetailQuery() { Id = Id });
         return Page();
     }
 
@@ -25,13 +31,7 @@ public class EditModel : PageModel
     {
         if (ModelState.IsValid)
         {
-            var model = await _dbContext.PayrollStatusTypes.FindAsync(Vm.Id);
-            model.Name = Vm.Name;
-            model.Description = Vm.Description;
-            model.LastModifiedBy = "System";
-            model.DateLastModified = DateTime.Now;
-                        
-            await _dbContext.SaveChangesAsync(new CancellationToken());
+            await _mediator.Send(Command);
 
             return RedirectToPage("Index");
         }

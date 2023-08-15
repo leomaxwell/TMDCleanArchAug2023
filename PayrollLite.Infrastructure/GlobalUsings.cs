@@ -7,3 +7,4 @@ global using PayrollLite.Domain.Entities;
 global using PayrollLite.Infrastructure.Common;
 global using PayrollLite.Infrastructure.Persistence.Contexts;
 global using System.Reflection;
+global using PayrollLite.Application.Common.Enums;
