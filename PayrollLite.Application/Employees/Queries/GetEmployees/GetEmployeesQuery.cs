@@ -5,41 +5,21 @@ public class GetEmployeesQuery : IRequest<EmployeesVm> { }
 public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, EmployeesVm>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetEmployeesQueryHandler(IApplicationDbContext context)
+    public GetEmployeesQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<EmployeesVm> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
-        var Employees = new List<EmployeeDto>();
-
-        var models = await _context.Employees.ToListAsync();
-
-
-
-        foreach (var item in models)
+        var vm = new EmployeesVm()
         {
-            var dto = new EmployeeDto()
-            {
-                Id = item.Id,
-                FirstName = item.FirstName,
-                MiddleName = item.MiddleName,
-                LastName = item.LastName,
-                GenderId = item.GenderId,
-                BirthDate = item.BirthDate,
-                EmailAddress = item.EmailAddress,
-                PhoneNo = item.PhoneNo,
-                JobTitle = item.JobTitle,
-                GrossSalary = item.GrossSalary,
-                GenderType = item.GenderType
-            };
-
-            Employees.Add(dto);
-        }
-
-        var vm = new EmployeesVm() { Employees = Employees };
+            Employees = await _context.Employees.ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider).ToListAsync()
+        };
+       
         return vm;
     }
 }

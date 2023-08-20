@@ -1,12 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+namespace PayrollLite.Pages.Dashboard;
 
-namespace PayrollLite.Pages.Dashboard
+[Authorize(Roles = "Employee")]
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PayrollLite.Application.MonthsOfYear.Queries.GetMonthsOfYear;
 
-public class MonthOfYearDto
+public class MonthOfYearDto : IMapFrom<MonthOfYear>
 {
     public int Id { get; set; }
     public string Name { get; set; }

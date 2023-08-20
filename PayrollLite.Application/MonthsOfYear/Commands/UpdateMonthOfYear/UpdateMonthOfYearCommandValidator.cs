@@ -1,6 +1,6 @@
 ﻿namespace PayrollLite.Application.MonthsOfYear.Commands.UpdateMonthOfYear;
 
-public class UpdateMonthOfYearCommandValidator : AbstractValidator<UpdateMonthOfYearCommand>
+internal class UpdateMonthOfYearCommandValidator : AbstractValidator<UpdateMonthOfYearCommand>
 {
     private readonly IApplicationDbContext _context;
 

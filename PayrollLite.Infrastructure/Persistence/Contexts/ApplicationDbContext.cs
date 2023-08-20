@@ -1,6 +1,8 @@
-﻿namespace PayrollLite.Infrastructure.Persistence.Contexts;
+﻿using PayrollLite.Infrastructure.Identity.Models;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+namespace PayrollLite.Infrastructure.Persistence.Contexts;
+
+public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
@@ -11,6 +13,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Payroll> Payrolls { get; set; }
     public DbSet<PayrollItem> PayrollItems { get; set; }
     public DbSet<PayrollStatusType> PayrollStatusTypes { get; set; }
+
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+    public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

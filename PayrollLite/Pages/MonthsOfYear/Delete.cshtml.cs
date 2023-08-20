@@ -1,38 +1,34 @@
+using PayrollLite.Application.MonthsOfYear.Commands.DeleteMonthOfYear;
+using PayrollLite.Application.MonthsOfYear.Queries.GetMonthOfYearDetail;
+using PayrollLite.Application.MonthsOfYear.Queries.GetMonthsOfYear;
+
 namespace PayrollLite.Pages.MonthsOfYear;
 
 public class DeleteModel : PageModel
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
     [BindProperty]
-    public MonthOfYear Vm { get; set; }
+    public MonthOfYearDto Dto { get; set; }
 
-    public DeleteModel(IApplicationDbContext dbContext)
+    public DeleteModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.MonthsOfYear.FindAsync(Id);
+        Dto = await _mediator.Send(new GetMonthOfYearDetailQuery() { Id = Id});
+
         return Page();
     }
 
     public async Task<IActionResult> OnPost()
     {
-        var model = await _dbContext.MonthsOfYear.FindAsync(Vm.Id);
-
-        if(model is null)
-        {
-            return Page();
-        }
-
-        _dbContext.MonthsOfYear.Remove(model);
-        await _dbContext.SaveChangesAsync(new CancellationToken());
-
+        await _mediator.Send(new DeleteMonthOfYearCommand() { Id = Id});
         return RedirectToPage("Index");
     }
 }

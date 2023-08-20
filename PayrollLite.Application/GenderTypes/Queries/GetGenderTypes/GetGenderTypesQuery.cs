@@ -5,33 +5,21 @@ public class GetGenderTypesQuery : IRequest<GenderTypesVm> { }
 public class GetGenderTypesQueryHandler : IRequestHandler<GetGenderTypesQuery, GenderTypesVm>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetGenderTypesQueryHandler(IApplicationDbContext context)
+    public GetGenderTypesQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<GenderTypesVm> Handle(GetGenderTypesQuery request, CancellationToken cancellationToken)
     {
-        var genderTypes = new List<GenderTypeDto>();
-
-        var models = await _context.GenderTypes.ToListAsync();
-
-
-
-        foreach (var item in models)
+        var vm = new GenderTypesVm()
         {
-            var dto = new GenderTypeDto()
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description
-            };
-
-            genderTypes.Add(dto);
-        }
-
-        var vm = new GenderTypesVm() { GenderTypes = genderTypes };
+            GenderTypes = await _context.GenderTypes.ProjectTo<GenderTypeDto>(_mapper.ConfigurationProvider).ToListAsync()
+        };
+        
         return vm;
     }
 }

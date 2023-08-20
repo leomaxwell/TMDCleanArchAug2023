@@ -10,31 +10,22 @@ public class GetEmployeeDetailQuery : IRequest<EmployeeDto>
 public class GetEmployeeDetailQueryHandler : IRequestHandler<GetEmployeeDetailQuery, EmployeeDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetEmployeeDetailQueryHandler(IApplicationDbContext context)
+    public GetEmployeeDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<EmployeeDto> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken)
     {
-        var model = await _context.Employees.FindAsync(request.Id);
-
-        var dto = new EmployeeDto()
-        {
-            Id = model.Id,
-            FirstName = model.FirstName,
-            MiddleName = model.MiddleName,
-            LastName = model.LastName,
-            GenderId = model.GenderId,
-            BirthDate = model.BirthDate,
-            EmailAddress = model.EmailAddress,
-            PhoneNo = model.PhoneNo,
-            JobTitle = model.JobTitle,
-            GrossSalary = model.GrossSalary,
-            GenderType = model.GenderType
-        };
-
+        var dto = await _context.Employees
+                                .Where(m => m.Id == request.Id)
+                                .Include(m => m.GenderType)
+                                .ProjectTo<EmployeeDto>(_mapper.ConfigurationProvider)
+                                .FirstOrDefaultAsync();
+       
         return dto;
     }
 }

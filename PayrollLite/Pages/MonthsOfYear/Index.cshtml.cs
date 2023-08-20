@@ -1,19 +1,21 @@
+using PayrollLite.Application.MonthsOfYear.Queries.GetMonthsOfYear;
+
 namespace PayrollLite.Pages.MonthsOfYear;
 
 public class IndexModel : PageModel
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
-    public IList<MonthOfYear> Vm { get; set; }
+    public MonthsOfYearVm Vm { get; set; }
 
-    public IndexModel(IApplicationDbContext dbContext)
+    public IndexModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.MonthsOfYear.OrderBy(m => m.Number).ToListAsync();
+        Vm = await _mediator.Send(new GetMonthsOfYearQuery());
         return Page();
     }
 }

@@ -1,0 +1,117 @@
+﻿@page
+@model PayrollLite.Pages.Employees.DeleteModel
+@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "Employee";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xxl">
+            @if (Model.Dto is null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <p>No record with id:@Model.Id exist.</p>
+                </div>
+            }
+            else
+            {
+                <h4 class="fw-bold py-3 mb-1">@ViewData["Title"]</h4>
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <p class="mb-0">
+                            <strong>Details </strong><br />
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input asp-for="Dto.Id" value="@Model.Id" hidden />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.FirstName" class="col-sm-4 col-form-label">First Name:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.FirstName" value="@Model.Dto.FirstName" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.MiddleName" class="col-sm-4 col-form-label">Middle Name :</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.MiddleName" value="@Model.Dto.MiddleName" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.LastName" class="col-sm-4 col-form-label">Last Name:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.LastName" value="@Model.Dto.LastName" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.GenderType" class="col-sm-4 col-form-label">Gender:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.GenderType" value="@Model.Dto.GenderType?.Name" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.BirthDate" class="col-sm-4 col-form-label">Birth Date:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.BirthDate" value="@Model.Dto.BirthDate.ToString("MMMM dd, yyyy")" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.EmailAddress" class="col-sm-4 col-form-label">Email Address:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.EmailAddress" value="@Model.Dto.EmailAddress" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.PhoneNo" class="col-sm-4 col-form-label">Phone No.:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.PhoneNo" value="@Model.Dto.PhoneNo" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.JobTitle" class="col-sm-4 col-form-label">Job Title:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.JobTitle" value="@Model.Dto.JobTitle" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label asp-for="Dto.GrossSalary" class="col-sm-4 col-form-label">Gross Salary:</label>
+                                        <div class="col-sm-8">
+                                            <input asp-for="Dto.GrossSalary" value="@Model.Dto.GrossSalary.ToString("C")" type="text" readonly class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p class="text-align-center">
+                                            <span class="tf-icons bx bx-info-circle"></span> You are about to delete this record. Note that this action
+                                            cannot be undone. Do you want to continue?
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div style="float: right;">
+                                        <button type="submit" class="btn btn-danger"><span class="tf-icons bx bx-trash"></span> Yes Delete!</button>
+                                        <a asp-page="Index" class="btn btn-secondary"><span class="tf-icons bx bx-x"></span> Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

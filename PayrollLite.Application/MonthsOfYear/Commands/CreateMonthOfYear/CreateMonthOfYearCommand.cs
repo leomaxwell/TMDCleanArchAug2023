@@ -7,7 +7,7 @@ public class CreateMonthOfYearCommand : IRequest<int>
     public string Number { get; set; }
 }
 
-public class CreateMonthOfYearCommandHandler : IRequestHandler<CreateMonthOfYearCommand, int>
+internal class CreateMonthOfYearCommandHandler : IRequestHandler<CreateMonthOfYearCommand, int>
 {
     private readonly IApplicationDbContext _context;
 

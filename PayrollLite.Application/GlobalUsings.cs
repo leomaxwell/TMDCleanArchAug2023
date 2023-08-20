@@ -1,8 +1,12 @@
-﻿global using MediatR;
+﻿global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using FluentValidation;
+global using FluentValidation.Results;
+global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using PayrollLite.Application.Common.Behaviors;
 global using PayrollLite.Application.Common.Interfaces.DbContexts;
+global using PayrollLite.Application.Common.Interfaces.Others;
 global using PayrollLite.Domain.Entities;
 global using System.Reflection;
-global using FluentValidation;
-global using PayrollLite.Application.Common.Behaviors;

@@ -10,23 +10,20 @@ public class GetPayrollStatusTypeDetailQuery : IRequest<PayrollStatusTypeDto>
 internal class GetPayrollStatusTypeDetailQueryHandler : IRequestHandler<GetPayrollStatusTypeDetailQuery, PayrollStatusTypeDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetPayrollStatusTypeDetailQueryHandler(IApplicationDbContext context)
+    public GetPayrollStatusTypeDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<PayrollStatusTypeDto> Handle(GetPayrollStatusTypeDetailQuery request, CancellationToken cancellationToken)
     {
-        var model = await _context.PayrollStatusTypes.FindAsync(request.Id);
+        return await _context.PayrollStatusTypes
+                            .Where(m => m.Id == request.Id)
+                            .ProjectTo<PayrollStatusTypeDto>(_mapper.ConfigurationProvider)
+                            .FirstOrDefaultAsync();
 
-        var dto = new PayrollStatusTypeDto()
-        {
-            Id = model.Id,
-            Name = model.Name,
-            Description = model.Description,
-        };
-
-        return dto;
     }
 }

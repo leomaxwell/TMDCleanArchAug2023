@@ -5,39 +5,24 @@ public class GetPayrollsQuery : IRequest<PayrollsVm> { }
 public class GetPayrollsQueryHandler : IRequestHandler<GetPayrollsQuery, PayrollsVm>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetPayrollsQueryHandler(IApplicationDbContext context)
+    public GetPayrollsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<PayrollsVm> Handle(GetPayrollsQuery request, CancellationToken cancellationToken)
     {
-        var Payrolls = new List<PayrollDto>();
-
-        var models = await _context.Payrolls.ToListAsync();
-
-
-
-        foreach (var item in models)
+        var vm = new PayrollsVm()
         {
-            var dto = new PayrollDto()
-            {
-                Id = item.Id,
-                MonthId = item.MonthId,
-                Year = item.Year,
-                ExchangeRate = item.ExchangeRate,
-                Description = item.Description,
-                StatusId = item.StatusId,
-                PayrollStatusType = item.PayrollStatusType,
-                MonthOfYear = item.MonthOfYear,
-                PayrollItems = item.PayrollItems,
-            };
+            Payrolls = await _context.Payrolls
+                                    .ProjectTo<PayrollDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync()
 
-            Payrolls.Add(dto);
-        }
+        };
 
-        var vm = new PayrollsVm() { Payrolls = Payrolls };
         return vm;
     }
 }

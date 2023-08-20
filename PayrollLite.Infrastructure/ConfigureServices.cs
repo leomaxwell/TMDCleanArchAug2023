@@ -6,6 +6,7 @@ public static class ConfigureServices
         this IServiceCollection services,
         IConfiguration configuration)
     {
+
         services.AddDbContext<ApplicationDbContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 

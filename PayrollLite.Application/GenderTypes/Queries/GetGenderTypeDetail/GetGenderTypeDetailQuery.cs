@@ -7,25 +7,23 @@ public class GetGenderTypeDetailQuery : IRequest<GenderTypeDto>
     public int Id { get; set; }
 }
 
-public class GetGenderTypeDetailQueryHandler : IRequestHandler<GetGenderTypeDetailQuery, GenderTypeDto>
+internal class GetGenderTypeDetailQueryHandler : IRequestHandler<GetGenderTypeDetailQuery, GenderTypeDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetGenderTypeDetailQueryHandler(IApplicationDbContext context)
+    public GetGenderTypeDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<GenderTypeDto> Handle(GetGenderTypeDetailQuery request, CancellationToken cancellationToken)
     {
-        var model = await _context.GenderTypes.FindAsync(request.Id);
-
-        var dto = new GenderTypeDto()
-        {
-            Id = model.Id,
-            Name = model.Name,
-            Description = model.Description,
-        };
+        var dto = await _context.GenderTypes
+                                .Where(m => m.Id ==  request.Id)
+                                .ProjectTo<GenderTypeDto>(_mapper.ConfigurationProvider)
+                                .SingleOrDefaultAsync();
 
         return dto;
     }

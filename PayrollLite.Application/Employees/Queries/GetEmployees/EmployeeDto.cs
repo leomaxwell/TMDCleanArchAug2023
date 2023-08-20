@@ -2,7 +2,7 @@
 
 namespace PayrollLite.Application.Employees.Queries.GetEmployees;
 
-public class EmployeeDto
+public class EmployeeDto : IMapFrom<Employee>
 {
     public int Id { get; set; }
     public string FirstName { get; set; }
@@ -14,9 +14,9 @@ public class EmployeeDto
     public string PhoneNo { get; set; }
     public string JobTitle { get; set; }
     public decimal GrossSalary { get; set; }
-        
+
     public string FullName => $"{FirstName} {MiddleName} {LastName}";
-        
+
     public int Age => AppMethods.GetAgeFromDate(BirthDate);
 
     //Navigation Properties

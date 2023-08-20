@@ -1,22 +1,25 @@
+using PayrollLite.Application.MonthsOfYear.Queries.GetMonthOfYearDetail;
+using PayrollLite.Application.MonthsOfYear.Queries.GetMonthsOfYear;
+
 namespace PayrollLite.Pages.MonthsOfYear;
 
 public class DetailModel : PageModel
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty(SupportsGet = true)]
     public int Id { get; set; }
 
-    public MonthOfYear Vm { get; set; }
+    public MonthOfYearDto Dto { get; set; }
 
-    public DetailModel(IApplicationDbContext dbContext)
+    public DetailModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public async Task<IActionResult> OnGet()
     {
-        Vm = await _dbContext.MonthsOfYear.FindAsync(Id);
+        Dto = await _mediator.Send(new GetMonthOfYearDetailQuery() { Id = Id });
         return Page();
     }
 }

@@ -10,24 +10,20 @@ public class GetMonthOfYearDetailQuery : IRequest<MonthOfYearDto>
 public class GetMonthOfYearDetailQueryHandler : IRequestHandler<GetMonthOfYearDetailQuery, MonthOfYearDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetMonthOfYearDetailQueryHandler(IApplicationDbContext context)
+    public GetMonthOfYearDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<MonthOfYearDto> Handle(GetMonthOfYearDetailQuery request, CancellationToken cancellationToken)
     {
-        var model = await _context.MonthsOfYear.FindAsync(request.Id);
-
-        var dto = new MonthOfYearDto()
-        {
-            Id = model.Id,
-            Name = model.Name,
-            Abbreviation = model.Abbreviation,
-            Number = model.Number,
-        };
-
+        var dto = await _context.MonthsOfYear
+                                .Where(m => m.Id == request.Id)
+                                .ProjectTo<MonthOfYearDto>(_mapper.ConfigurationProvider)
+                                .SingleOrDefaultAsync();
         return dto;
     }
 }

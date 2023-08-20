@@ -10,7 +10,7 @@
     <div class="row">
         <!-- Basic Layout -->
         <div class="col-xxl">
-            @if (Model.Vm is null)
+            @if (Model.Dto is null)
             {
                 <div class="alert alert-danger" role="alert">
                     <p>No record with id:@Model.Id exist.</p>
@@ -29,27 +29,26 @@
                     <div class="card-body">
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="Vm.Id" value="@Model.Id" hidden />
-                            <input asp-for="Vm.RecordedBy" value="System" hidden />
+                            <input asp-for="Command.Id" value="@Model.Id" hidden />
                             <div class="row mb-3">
-                                <label asp-for="Vm.Name" class="col-sm-2 col-form-label" for="basic-default-name">Name<span class="text-danger">*</span> :</label>
+                                <label asp-for="Command.Name" class="col-sm-2 col-form-label">Name<span class="text-danger">*</span> :</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Vm.Name" type="text" class="form-control" />
-                                    <span asp-validation-for="Vm.Name" class="text-danger" />
+                                    <input asp-for="Command.Name" value="@Model.Dto.Name" type="text" class="form-control" />
+                                    <span asp-validation-for="Command.Name" class="text-danger" />
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label asp-for="Vm.Abbreviation" class="col-sm-2 col-form-label" for="basic-default-name">Abbreviation<span class="text-danger">*</span> :</label>
+                                <label asp-for="Command.Abbreviation" class="col-sm-2 col-form-label">Abbreviation<span class="text-danger">*</span> :</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Vm.Abbreviation" type="text" class="form-control" />
-                                    <span asp-validation-for="Vm.Abbreviation" class="text-danger" />
+                                    <input asp-for="Command.Abbreviation" value="@Model.Dto.Abbreviation" type="text" class="form-control" />
+                                    <span asp-validation-for="Command.Abbreviation" class="text-danger" />
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label asp-for="Vm.Number" class="col-sm-2 col-form-label" for="basic-default-name">Number<span class="text-danger">*</span> :</label>
+                                <label asp-for="Command.Number" class="col-sm-2 col-form-label">Number<span class="text-danger">*</span> :</label>
                                 <div class="col-sm-10">
-                                    <input asp-for="Vm.Number" type="text" class="form-control" />
-                                    <span asp-validation-for="Vm.Number" class="text-danger" />
+                                    <input asp-for="Command.Number" value="@Model.Dto.Number" type="text" class="form-control" />
+                                    <span asp-validation-for="Command.Number" class="text-danger" />
                                 </div>
                             </div>
                             <div class="row">

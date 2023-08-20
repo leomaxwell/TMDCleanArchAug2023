@@ -8,7 +8,7 @@ public class UpdateMonthOfYearCommand : IRequest<bool>
     public string Number { get; set; }
 }
 
-public class UpdateMonthOfYearCommandHandler : IRequestHandler<UpdateMonthOfYearCommand, bool>
+internal class UpdateMonthOfYearCommandHandler : IRequestHandler<UpdateMonthOfYearCommand, bool>
 {
     private readonly IApplicationDbContext _context;
 

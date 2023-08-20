@@ -1,15 +1,17 @@
+using PayrollLite.Application.MonthsOfYear.Commands.CreateMonthOfYear;
+
 namespace PayrollLite.Pages.MonthsOfYear;
 
 public class CreateModel : PageModel
 {
-    private readonly IApplicationDbContext _dbContext;
+    private readonly IMediator _mediator;
 
     [BindProperty]
-    public MonthOfYear Vm { get; set; }
+    public CreateMonthOfYearCommand Command { get; set; }
 
-    public CreateModel(IApplicationDbContext dbContext)
+    public CreateModel(IMediator mediator)
     {
-        _dbContext = dbContext;
+        _mediator = mediator;
     }
 
     public IActionResult OnGet()
@@ -21,18 +23,7 @@ public class CreateModel : PageModel
     {
         if (ModelState.IsValid)
         {
-            var model = new MonthOfYear()
-            {
-                Name = Vm.Name,
-                Abbreviation = Vm.Abbreviation,
-                Number = Vm.Number,
-                RecordedBy = Vm.RecordedBy,
-                DateRecorded = DateTime.Now
-            };
-
-            _dbContext.MonthsOfYear.Add(model);
-            await _dbContext.SaveChangesAsync(new CancellationToken());
-
+            await _mediator.Send(Command);
             return RedirectToPage("Index");
         }
 

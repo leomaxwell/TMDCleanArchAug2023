@@ -1,6 +1,6 @@
 ﻿namespace PayrollLite.Application.Payrolls.Queries.GetPayrolls;
 
-public class PayrollDto
+public class PayrollDto : IMapFrom<Payroll>
 {
     public int Id { get; set; }
     public int MonthId { get; set; }

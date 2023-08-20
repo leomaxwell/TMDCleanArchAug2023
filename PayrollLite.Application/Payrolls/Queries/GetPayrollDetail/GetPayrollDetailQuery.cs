@@ -10,28 +10,19 @@ public class GetPayrollDetailQuery : IRequest<PayrollDto>
 public class GetPayrollDetailQueryHandler : IRequestHandler<GetPayrollDetailQuery, PayrollDto>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetPayrollDetailQueryHandler(IApplicationDbContext context)
+    public GetPayrollDetailQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<PayrollDto> Handle(GetPayrollDetailQuery request, CancellationToken cancellationToken)
     {
-        var model = await _context.Payrolls.FindAsync(request.Id);
-
-        var dto = new PayrollDto()
-        {
-            Id = model.Id,
-            MonthId = model.MonthId,
-            Year = model.Year,
-            ExchangeRate = model.ExchangeRate,
-            Description = model.Description,
-            StatusId = model.StatusId,
-            PayrollStatusType = model.PayrollStatusType,
-            MonthOfYear = model.MonthOfYear,
-            PayrollItems = model.PayrollItems,
-        };
+        var dto = await _context.Payrolls.Where(m => m.Id == request.Id)
+                                        .ProjectTo<PayrollDto>(_mapper.ConfigurationProvider)
+                                        .SingleOrDefaultAsync();
 
         return dto;
     }

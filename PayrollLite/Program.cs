@@ -1,10 +1,23 @@
+using Microsoft.Extensions.DependencyInjection;
 using PayrollLite.Infrastructure.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = true;
+        })
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AuthorizeFolder("/Pages/");
+});
 
 builder.Services.AddRazorPages().AddFluentValidation(fv =>
 {
@@ -23,7 +36,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

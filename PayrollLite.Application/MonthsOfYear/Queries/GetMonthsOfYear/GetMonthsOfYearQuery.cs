@@ -2,37 +2,24 @@
 
 public class GetMonthsOfYearQuery : IRequest<MonthsOfYearVm> { }
 
-public class GetMonthsOfYearQueryHandler : IRequestHandler<GetMonthsOfYearQuery, MonthsOfYearVm>
+internal class GetMonthsOfYearQueryHandler : IRequestHandler<GetMonthsOfYearQuery, MonthsOfYearVm>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public GetMonthsOfYearQueryHandler(IApplicationDbContext context)
+    public GetMonthsOfYearQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public async Task<MonthsOfYearVm> Handle(GetMonthsOfYearQuery request, CancellationToken cancellationToken)
     {
-        var MonthsOfYear = new List<MonthOfYearDto>();
-
-        var models = await _context.MonthsOfYear.ToListAsync();
-
-
-
-        foreach (var item in models)
+        var vm = new MonthsOfYearVm()
         {
-            var dto = new MonthOfYearDto()
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Abbreviation = item.Abbreviation,
-                Number = item.Number
-            };
-
-            MonthsOfYear.Add(dto);
-        }
-
-        var vm = new MonthsOfYearVm() { MonthsOfYear = MonthsOfYear };
+            MonthsOfYear = await _context.MonthsOfYear.ProjectTo<MonthOfYearDto>(_mapper.ConfigurationProvider).ToListAsync()
+        };
+        
         return vm;
     }
 }
